@@ -1,14 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "./components/layout/Header";
+import Main from "./components/layout/Main";
+import GlobalStyle from "./components/style/GlobalStyle";
 
 function App() {
   return (
-    <Container>
-      <h1>Hello this is App</h1>
-    </Container>
+    <AppWrapper>
+      <GlobalStyle />
+      <Header />
+      <Main />
+    </AppWrapper>
   );
 }
 
 export default App;
 
-const Container = styled.div``;
+const AppWrapper = styled.div``;
