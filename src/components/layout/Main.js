@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
-import EmailsView from "./EmailsView";
-import MailView from "./MailView";
+import InboxMail from "../inbox/InboxMail";
+import InboxMailView from "../inbox/InboxMailView";
 import SendMessageModal from "./SendMessageModal";
 import Sidebar from "./Sidebar";
 import SideIcons from "./SideIcons";
 
-function Main() {
+function Main({ sidebar, user }) {
   return (
-    <MainWrapper>
-      <Sidebar />
+    <MainWrapper sidebar={sidebar ? 1 : 0}>
+      <Sidebar user={user} sidebar={sidebar} />
       <Router>
         <Switch>
-          <Route path="/">
-            <EmailsView />
+          <Route path="/" exact>
+            <InboxMail user={user} sidebar={sidebar} />
           </Route>
-          <Route path="/mail/:mailId">
-            <MailView />
+          <Route path="/inbox/:mailId">
+            <InboxMailView sidebar={sidebar} />
           </Route>
         </Switch>
       </Router>
@@ -35,5 +35,7 @@ export default Main;
 const MainWrapper = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 256px auto 50px;
+  grid-template-columns: ${({ sidebar }) =>
+    sidebar ? "65px auto 50px" : "256px auto 50px"};
+  /* transition: all 500ms ease-out 3s; */
 `;

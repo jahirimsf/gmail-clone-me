@@ -1,18 +1,35 @@
 import React from "react";
-
 import styled from "styled-components";
+import { makeStyles } from "@material-ui/core/styles";
+import Badge from "@material-ui/core/Badge";
 
-function SidebarButtonItems({ Icon, title, selected, active, number, select }) {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
+function SidebarButtonItems({ Icon, title, number, sidebar }) {
+  const classes = useStyles();
   return (
-    <ButtonWrapper
-      select={select ? 1 : 0}
-      active={active ? 1 : 0}
-      selected={selected ? 1 : 0}
-    >
-      <Icon />
-      <p>{title}</p>
-      <span>{number}</span>
-    </ButtonWrapper>
+    <>
+      {sidebar ? (
+        <BadgeButton className={classes.root}>
+          <Badge color="secondary" badgeContent={number}>
+            <Icon />
+          </Badge>
+        </BadgeButton>
+      ) : (
+        <ButtonWrapper>
+          <Icon />
+          {title ? <p>{title}</p> : ""}
+
+          {number ? <span>{number}</span> : ""}
+        </ButtonWrapper>
+      )}
+    </>
   );
 }
 
@@ -22,7 +39,7 @@ const ButtonWrapper = styled.a`
   display: grid;
   grid-template-columns: 18% auto min-content;
   align-items: center;
-  background-color: ${({ selected }) => (selected ? "#fcecec" : "#fff")};
+  background-color: white;
   padding: 5px 20px;
   font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
   border-radius: 0 100px 100px 0;
@@ -35,22 +52,41 @@ const ButtonWrapper = styled.a`
 
   .MuiSvgIcon-root {
     font-size: 18px;
-    color: ${({ selected }) => (selected ? "red" : "gray")};
+    color: gray;
   }
   p {
-    font-size: ${({ active }) => (active ? ".9rem" : "0.875rem")};
-    color: ${({ selected, select }) =>
-      select ? "dark" : selected ? "red" : "gray"};
-    font-weight: ${({ active }) => (active ? "500" : "400")};
+    font-size: 0.875rem;
+    color: gray;
+    font-weight: 400;
   }
   span {
-    display: ${({ active }) => (active ? "inline" : "none")};
-    color: ${({ selected, select }) =>
-      select ? "dark" : selected ? "red" : "gray"};
-    font-weight: ${({ active }) => (active ? "500" : "400")};
-    font-size: ${({ active }) => (active ? ".9rem" : "0.875rem")};
+    display: none;
+    color: gray;
+    font-weight: 400;
+    font-size: "0.875rem";
   }
   &:hover {
-    background-color: #f5f7f7;
+    background-color: #fcecec;
+
+    p {
+      color: #1c1427;
+      font-weight: 400;
+    }
+    span {
+      display: inline;
+      color: #1c1427;
+      font-weight: 400;
+      font-size: 0.875rem;
+    }
+  }
+`;
+const BadgeButton = styled.div`
+  margin-left: 10px;
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  border-radius: 0 100px 100px 0;
+  cursor: pointer;
+  .MuiSvgIcon-root {
+    font-size: 18px;
+    color: gray;
   }
 `;

@@ -8,11 +8,11 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import AppsIcon from "@material-ui/icons/Apps";
 import { Container } from "../style/GlobalStyle";
-function Header() {
+function Header({ handleSidebar, user, signOut }) {
   return (
     <HeaderContainer>
       <LogoWrapper>
-        <IconButton>
+        <IconButton onClick={handleSidebar}>
           <MenuIcon />
         </IconButton>
 
@@ -41,7 +41,7 @@ function Header() {
           <AppsIcon />
         </IconButton>
         <IconButton size="small">
-          <Avatar />
+          <Avatar onClick={signOut} src={user?.userPhoto} />
         </IconButton>
       </SettingsWrapper>
     </HeaderContainer>
@@ -55,6 +55,8 @@ const HeaderContainer = styled.div`
   grid-template-columns: 17% auto min-content;
   align-items: center;
   background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
   height: 60px;
   @media screen and (max-width: 1024px) {
   }
