@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Badge from "@material-ui/core/Badge";
 import { Link, useHistory } from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,8 +36,6 @@ function SidebarButtonItems({
     }
   };
 
-  // to={`${sent ? "/sent" : "/"}`}
-
   return (
     <SidebarButton onClick={handleSidebar}>
       {sidebar ? (
@@ -45,12 +45,14 @@ function SidebarButtonItems({
           </Badge>
         </BadgeButton>
       ) : (
-        <ButtonWrapper>
-          <Icon />
-          {title ? <p>{title}</p> : ""}
+        <Tooltip TransitionComponent={Zoom} title={title} placement="right">
+          <ButtonWrapper>
+            <Icon />
+            {title ? <p>{title}</p> : ""}
 
-          {number ? <span>{number}</span> : ""}
-        </ButtonWrapper>
+            {number ? <span>{number}</span> : ""}
+          </ButtonWrapper>
+        </Tooltip>
       )}
     </SidebarButton>
   );

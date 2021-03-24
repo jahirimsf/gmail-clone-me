@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { IconButton } from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles({
   root: {
@@ -19,22 +21,33 @@ function GroupButton({ Icon, split }) {
   return (
     <Wrapper>
       {split ? (
-        <IconButton
-          style={{ paddingLeft: "4px", paddingRight: "2px" }}
-          className={classes.root}
+        <Tooltip
+          TransitionComponent={Zoom}
+          title="Input tools on/off (Ctrl-Shift-K)"
+          placement="bottom"
         >
-          <Icon style={{ fontSize: "20px" }} />
-        </IconButton>
+          <IconButton
+            style={{ paddingLeft: "4px", paddingRight: "2px" }}
+            className={classes.root}
+          >
+            <Icon style={{ fontSize: "20px" }} />
+          </IconButton>
+        </Tooltip>
       ) : (
         <Icon
           style={{ paddingLeft: "2px", paddingRight: "2px" }}
           className={classes.root}
         />
       )}
-
-      <IconButton className={classes.root} size="small">
-        <ArrowDropDownIcon />
-      </IconButton>
+      <Tooltip
+        TransitionComponent={Zoom}
+        title="Select input tool"
+        placement="bottom"
+      >
+        <IconButton className={classes.root} size="small">
+          <ArrowDropDownIcon />
+        </IconButton>
+      </Tooltip>
     </Wrapper>
   );
 }

@@ -11,27 +11,38 @@ import KeyboardIcon from "@material-ui/icons/Keyboard";
 import { Button, Checkbox, IconButton } from "@material-ui/core";
 import styled from "styled-components";
 import GroupButton from "../button/GroupButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 function EmailsTopHeader() {
   return (
     <EmailsTopWrapper>
       <TopWrapperLeft>
         <GroupButton Icon={Checkbox} />
-        <IconButton>
-          <RefreshIcon />
-        </IconButton>
-        <IconButton>
-          <MoreVertIcon />
-        </IconButton>
+        <Tooltip TransitionComponent={Zoom} title="Refresh" placement="bottom">
+          <IconButton>
+            <RefreshIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip TransitionComponent={Zoom} title="More" placement="bottom">
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
+        </Tooltip>
       </TopWrapperLeft>
       <TopWrapperRight>
         <PaginationButton>1-100 of 300</PaginationButton>
-        <IconButton>
-          <ChevronLeftIcon />
-        </IconButton>
-        <IconButton>
-          <ChevronRightIcon />
-        </IconButton>
+        <Tooltip TransitionComponent={Zoom} title="Newer" placement="bottom">
+          <IconButton>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip TransitionComponent={Zoom} title="Older" placement="bottom">
+          <IconButton>
+            <ChevronRightIcon />
+          </IconButton>
+        </Tooltip>
         <GroupButton Icon={VerticalSplitIcon} split={true} />
 
         <GroupButton Icon={KeyboardIcon} split={true} />

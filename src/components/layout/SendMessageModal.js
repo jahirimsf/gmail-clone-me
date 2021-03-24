@@ -11,6 +11,8 @@ import { db } from "../../firebase";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 function SendMessageModal({ setOpenModal, user }) {
   const [values, setValues] = useState({
@@ -75,9 +77,15 @@ function SendMessageModal({ setOpenModal, user }) {
       <Wrapper>
         <Header>
           <p>New Message</p>
-          <IconButton onClick={() => setOpenModal(false)} size="small">
-            <CloseIcon htmlColor="gray" />
-          </IconButton>
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Save & close"
+            placement="bottom"
+          >
+            <IconButton onClick={() => setOpenModal(false)} size="small">
+              <CloseIcon htmlColor="gray" />
+            </IconButton>
+          </Tooltip>
         </Header>
         <Container>
           <To>
@@ -112,29 +120,59 @@ function SendMessageModal({ setOpenModal, user }) {
 
           <BottomHeader>
             <ButtonGroup size="small">
-              <Button onClick={onSubmit} variant="contained" color="primary">
-                Send
-              </Button>
-              <Button
-                style={{ paddingLeft: "0", paddingRight: "0" }}
-                variant="contained"
-                color="primary"
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Send (Ctrl-Enter)"
+                placement="bottom"
               >
-                <ArrowDropDownIcon />
-              </Button>
+                <Button onClick={onSubmit} variant="contained" color="primary">
+                  Send
+                </Button>
+              </Tooltip>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Mre send options"
+                placement="bottom"
+              >
+                <Button
+                  style={{ paddingLeft: "0", paddingRight: "0" }}
+                  variant="contained"
+                  color="primary"
+                >
+                  <ArrowDropDownIcon />
+                </Button>
+              </Tooltip>
             </ButtonGroup>
             <MiddleButton>
               {sendButtonIcon.map(({ icon, title }) => (
-                <IconButton size="small">{icon}</IconButton>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title={title}
+                  placement="top"
+                >
+                  <IconButton size="small">{icon}</IconButton>
+                </Tooltip>
               ))}
             </MiddleButton>
             <RightButton>
-              <IconButton size="small">
-                <MoreVertIcon />
-              </IconButton>
-              <IconButton size="small">
-                <DeleteIcon />
-              </IconButton>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="More options"
+                placement="top"
+              >
+                <IconButton size="small">
+                  <MoreVertIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Discard draft (Ctrl-shift-D)"
+                placement="top"
+              >
+                <IconButton size="small">
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
             </RightButton>
           </BottomHeader>
         </Container>

@@ -19,6 +19,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import CallIcon from "@material-ui/icons/Call";
 import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import VideocamOutlinedIcon from "@material-ui/icons/VideocamOutlined";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 function Sidebar({
   sidebar,
@@ -154,22 +156,46 @@ function Sidebar({
                 <div>
                   Jahir <ArrowDropDownIcon style={{ fontSize: "14" }} />
                 </div>
-                <IconButton size="small">
-                  <AddIcon />
-                </IconButton>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="New conversation"
+                  placement="right"
+                >
+                  <IconButton size="small">
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
               </HangoutsItem>
             </HangoutsWrapper>
 
             <BottomIconWrapper>
-              <IconButton size="small">
-                <PersonIcon />
-              </IconButton>
-              <IconButton size="small">
-                <FormatQuoteIcon />
-              </IconButton>
-              <IconButton size="small">
-                <CallIcon />
-              </IconButton>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Hangouts contacts"
+                placement="top"
+              >
+                <IconButton size="small">
+                  <PersonIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Hangouts conversation"
+                placement="top"
+              >
+                <IconButton size="small">
+                  <FormatQuoteIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Phone calls"
+                placement="top"
+              >
+                <IconButton size="small">
+                  <CallIcon />
+                </IconButton>
+              </Tooltip>
             </BottomIconWrapper>
           </BottomeSection>
         </SidebarWrapper>

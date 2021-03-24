@@ -9,9 +9,12 @@ import { Button, IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import GroupButton from "../button/GroupButton";
 import { dataMailViewIcon } from "../data/dataMailViewIcon";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 function InboxMailViewSettingsHeader({ inbox, sent, starred }) {
   const history = useHistory();
+
   const handleRouting = () => {
     if (inbox) {
       history.push("/");
@@ -23,22 +26,31 @@ function InboxMailViewSettingsHeader({ inbox, sent, starred }) {
   };
   return (
     <MailSettingsHeader>
-      <IconButton onClick={handleRouting}>
-        <ArrowBackIcon />
-      </IconButton>
+      <Tooltip TransitionComponent={Zoom} title="Back" placement="bottom">
+        <IconButton onClick={handleRouting}>
+          <ArrowBackIcon />
+        </IconButton>
+      </Tooltip>
       <MailHeaderLeft>
         {dataMailViewIcon.map(({ Icon, title }) => (
-          <IconButton>{Icon}</IconButton>
+          <Tooltip TransitionComponent={Zoom} title={title} placement="bottom">
+            <IconButton>{Icon}</IconButton>
+          </Tooltip>
         ))}
       </MailHeaderLeft>
       <MailHeaderRight>
         <PaginationButton>1-100 of 300</PaginationButton>
-        <IconButton>
-          <ChevronLeftIcon />
-        </IconButton>
-        <IconButton>
-          <ChevronRightIcon />
-        </IconButton>
+        <Tooltip TransitionComponent={Zoom} title="Newer" placement="bottom">
+          <IconButton>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip TransitionComponent={Zoom} title="Older" placement="bottom">
+          <IconButton>
+            <ChevronRightIcon />
+          </IconButton>
+        </Tooltip>
+
         <GroupButton Icon={KeyboardIcon} split={true} />
       </MailHeaderRight>
     </MailSettingsHeader>
