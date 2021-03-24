@@ -7,6 +7,9 @@ import LabelImportantIcon from "@material-ui/icons/LabelImportant";
 import { db } from "../../firebase";
 import { useHistory } from "react-router-dom";
 
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
+
 function InboxMailRow({
   id,
   sidebar,
@@ -81,16 +84,40 @@ function InboxMailRow({
     <Wrapper>
       <ItemLeft>
         <Checkbox size="small" />
-        <IconButton onClick={handleStar} size="small">
-          {!star ? <StarBorderIcon /> : <StarIcon htmlColor="#f7cb69" />}
-        </IconButton>
-        <IconButton onClick={handleImportant} size="small">
-          {!impor ? (
-            <LabelImportantIcon />
-          ) : (
-            <LabelImportantIcon htmlColor="#f7cb69" />
-          )}
-        </IconButton>
+
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={!star ? "Not starred" : "starred"}
+          placement="bottom"
+        >
+          <IconButton onClick={handleStar} size="small">
+            {!star ? <StarBorderIcon /> : <StarIcon htmlColor="#f7cb69" />}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={
+            !impor ? (
+              <>
+                <i> Click to teach gmail this conversation is important.</i>
+              </>
+            ) : (
+              <>
+                <p>Important mainly because it was sent directly to you.</p>
+                <i> Click to teach gmail this conversation is important.</i>
+              </>
+            )
+          }
+          placement="bottom"
+        >
+          <IconButton onClick={handleImportant} size="small">
+            {!impor ? (
+              <LabelImportantIcon />
+            ) : (
+              <LabelImportantIcon htmlColor="#f7cb69" />
+            )}
+          </IconButton>
+        </Tooltip>
       </ItemLeft>
       <ItemRight onClick={handleRead} sidebar={sidebar ? 1 : 0}>
         <p className={isread ? "" : "unread"}> {userName}</p>

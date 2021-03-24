@@ -7,14 +7,22 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import AppsIcon from "@material-ui/icons/Apps";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 function Header({ handleSidebar, user, signOut }) {
   return (
     <HeaderContainer>
       <LogoWrapper>
-        <IconButton onClick={handleSidebar}>
-          <MenuIcon />
-        </IconButton>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title="Main menu"
+          placement="bottom"
+        >
+          <IconButton onClick={handleSidebar}>
+            <MenuIcon />
+          </IconButton>
+        </Tooltip>
 
         <img
           src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r2.png"
@@ -22,27 +30,57 @@ function Header({ handleSidebar, user, signOut }) {
         />
       </LogoWrapper>
       <SearchWrapper>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
+        <Tooltip TransitionComponent={Zoom} title="Search" placement="bottom">
+          <IconButton>
+            <SearchIcon />
+          </IconButton>
+        </Tooltip>
         <input type="text" placeholder="Search mail" />
-        <IconButton>
-          <ArrowDropDownIcon />
-        </IconButton>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title="Show search options"
+          placement="bottom"
+        >
+          <IconButton>
+            <ArrowDropDownIcon />
+          </IconButton>
+        </Tooltip>
       </SearchWrapper>
       <SettingsWrapper>
-        <IconButton>
-          <HelpOutlineIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <AppsIcon />
-        </IconButton>
-        <IconButton size="small">
-          <Avatar onClick={signOut} src={user?.userPhoto} />
-        </IconButton>
+        <Tooltip TransitionComponent={Zoom} title="Support" placement="bottom">
+          <IconButton>
+            <HelpOutlineIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip TransitionComponent={Zoom} title="Settings" placement="bottom">
+          <IconButton>
+            <SettingsOutlinedIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title="Google app"
+          placement="bottom"
+        >
+          <IconButton>
+            <AppsIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          TransitionComponent={Zoom}
+          title={
+            <>
+              <h3>Google accounts</h3>
+              <p>{user.userName}</p>
+              <p>{user.userEmail}</p>
+            </>
+          }
+          placement="bottom"
+        >
+          <IconButton size="small">
+            <Avatar onClick={signOut} src={user?.userPhoto} />
+          </IconButton>
+        </Tooltip>
       </SettingsWrapper>
     </HeaderContainer>
   );

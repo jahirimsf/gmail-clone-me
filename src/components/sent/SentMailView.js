@@ -22,6 +22,8 @@ import SimpleButton from "../button/SimpleButton";
 import { useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import InboxMailViewSettingsHeader from "../inbox/InboxMailViewSettingsHeader";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
 
 function SentMailView({ sidebar }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -101,24 +103,61 @@ function SentMailView({ sidebar }) {
           <MailViewSection sidebar={sidebar ? 1 : 0}>
             <MailTitleHeader>
               <LeftButton>
-                <Title>Titele</Title>
-                <IconButton onClick={handleImportant} size="small">
-                  {impor ? (
-                    <LabelImportantIcon htmlColor="#f7cb69" />
-                  ) : (
-                    <LabelImportantIcon />
-                  )}
-                </IconButton>
+                <Title>{mail.subject}</Title>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title={
+                    !impor ? (
+                      <>
+                        <i>
+                          {" "}
+                          Click to teach gmail this conversation is important.
+                        </i>
+                      </>
+                    ) : (
+                      <>
+                        <p>
+                          Important mainly because it was sent directly to you.
+                        </p>
+                        <i>
+                          {" "}
+                          Click to teach gmail this conversation is important.
+                        </i>
+                      </>
+                    )
+                  }
+                  placement="bottom"
+                >
+                  <IconButton onClick={handleImportant} size="small">
+                    {!impor ? (
+                      <LabelImportantIcon />
+                    ) : (
+                      <LabelImportantIcon htmlColor="#f7cb69" />
+                    )}
+                  </IconButton>
+                </Tooltip>
                 <SimpleButton />
               </LeftButton>
 
               <RightButton>
-                <IconButton>
-                  <PrintIcon />
-                </IconButton>
-                <IconButton>
-                  <OpenInNewIcon />
-                </IconButton>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Print all"
+                  placement="bottom"
+                >
+                  <IconButton>
+                    <PrintIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="In new window"
+                  placement="bottom"
+                >
+                  <IconButton>
+                    <OpenInNewIcon />
+                  </IconButton>
+                </Tooltip>
               </RightButton>
             </MailTitleHeader>
 
@@ -131,9 +170,15 @@ function SentMailView({ sidebar }) {
                   </h6>
                   <Span>
                     to me
-                    <button>
-                      <ArrowDropDownIcon />
-                    </button>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="Show Details"
+                      placement="bottom"
+                    >
+                      <button>
+                        <ArrowDropDownIcon />
+                      </button>
+                    </Tooltip>
                   </Span>
                 </div>
               </MailUserLeft>
@@ -144,19 +189,37 @@ function SentMailView({ sidebar }) {
                   {new Date(mail.timestamp?.seconds * 1000).toLocaleString()}
                 </p>
                 <div>
-                  <IconButton onClick={handleStar} size="small">
-                    {star ? (
-                      <StarIcon htmlColor="#f7cb69" />
-                    ) : (
-                      <StarBorderIcon />
-                    )}
-                  </IconButton>
-                  <IconButton>
-                    <ReplyIcon />
-                  </IconButton>
-                  <IconButton>
-                    <MoreVertIcon />
-                  </IconButton>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title={!star ? "Not starred" : "starred"}
+                    placement="bottom"
+                  >
+                    <IconButton onClick={handleStar} size="small">
+                      {!star ? (
+                        <StarBorderIcon />
+                      ) : (
+                        <StarIcon htmlColor="#f7cb69" />
+                      )}
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Reply"
+                    placement="bottom"
+                  >
+                    <IconButton>
+                      <ReplyIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="More"
+                    placement="bottom"
+                  >
+                    <IconButton>
+                      <MoreVertIcon />
+                    </IconButton>
+                  </Tooltip>
                 </div>
               </MailUserRight>
             </MailUserHeader>
@@ -224,6 +287,7 @@ const Span = styled.span`
     height: 20px;
     border-radius: 2px;
     padding: 0;
+    cursor: pointer;
     margin-left: 5px;
     :hover {
       background: lightgray;
