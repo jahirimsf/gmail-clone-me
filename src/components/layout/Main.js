@@ -1,31 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-
+import SentMailView from "../sent/SentMailView";
 import InboxMail from "../inbox/InboxMail";
 import InboxMailView from "../inbox/InboxMailView";
+import SentMail from "../sent/SentMail";
 import SendMessageModal from "./SendMessageModal";
 import Sidebar from "./Sidebar";
 import SideIcons from "./SideIcons";
+import StarredMail from "../starred/StarredMail";
+import StarredMailView from "../starred/StarredMailView";
 
 function Main({ sidebar, user }) {
+  const [inboxlength, setinboxLength] = useState(0);
+  const [sentlength, setSentLength] = useState(0);
+  const [starlength, setStarLength] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+
+  const openSendMessage = () => {
+    setOpenModal(true);
+  };
   return (
     <MainWrapper sidebar={sidebar ? 1 : 0}>
-      <Sidebar user={user} sidebar={sidebar} />
       <Router>
+        <Sidebar
+          sentlength={sentlength}
+          inboxlength={inboxlength}
+          starlength={starlength}
+          user={user}
+          sidebar={sidebar}
+          openSendMessage={openSendMessage}
+        />
         <Switch>
           <Route path="/" exact>
-            <InboxMail user={user} sidebar={sidebar} />
+            <InboxMail
+              setinboxLength={setinboxLength}
+              user={user}
+              sidebar={sidebar}
+            />
           </Route>
+          <Route path="/star">
+            <StarredMail
+              setStarLength={setStarLength}
+              user={user}
+              sidebar={sidebar}
+            />
+          </Route>
+          <Route path="/sent">
+            <SentMail
+              setSentLength={setSentLength}
+              user={user}
+              sidebar={sidebar}
+            />
+          </Route>
+
           <Route path="/inbox/:mailId">
             <InboxMailView sidebar={sidebar} />
+          </Route>
+          <Route path="/starred/:starId">
+            <StarredMailView sidebar={sidebar} />
+          </Route>
+          <Route path="/sentView/:sentId">
+            <SentMailView sidebar={sidebar} />
           </Route>
         </Switch>
       </Router>
 
       <SideIcons />
-
-      <SendMessageModal />
+      {openModal && (
+        <SendMessageModal user={user} setOpenModal={setOpenModal} />
+      )}
     </MainWrapper>
   );
 }

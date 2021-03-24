@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Badge from "@material-ui/core/Badge";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,10 +12,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SidebarButtonItems({ Icon, title, number, sidebar }) {
+function SidebarButtonItems({
+  Icon,
+  title,
+  number,
+  sidebar,
+  inbox,
+  sent,
+  star,
+}) {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleSidebar = () => {
+    if (inbox) {
+      history.push("/");
+    } else if (star) {
+      history.push("/star");
+    } else if (sent) {
+      history.push("/sent");
+    }
+  };
+
+  // to={`${sent ? "/sent" : "/"}`}
+
   return (
-    <>
+    <SidebarButton onClick={handleSidebar}>
       {sidebar ? (
         <BadgeButton className={classes.root}>
           <Badge color="secondary" badgeContent={number}>
@@ -29,17 +52,21 @@ function SidebarButtonItems({ Icon, title, number, sidebar }) {
           {number ? <span>{number}</span> : ""}
         </ButtonWrapper>
       )}
-    </>
+    </SidebarButton>
   );
 }
 
 export default SidebarButtonItems;
 
-const ButtonWrapper = styled.a`
+const SidebarButton = styled(Link)`
+  text-decoration: none;
+`;
+
+const ButtonWrapper = styled.div`
   display: grid;
   grid-template-columns: 18% auto min-content;
   align-items: center;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.1);
   padding: 5px 20px;
   font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
   border-radius: 0 100px 100px 0;

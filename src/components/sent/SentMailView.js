@@ -18,24 +18,25 @@ import ReplyIcon from "@material-ui/icons/Reply";
 import ForwardIcon from "@material-ui/icons/Forward";
 import StarIcon from "@material-ui/icons/Star";
 import SimpleButton from "../button/SimpleButton";
-import InboxMailViewSettingsHeader from "./InboxMailViewSettingsHeader";
+
 import { useParams } from "react-router-dom";
 import { db } from "../../firebase";
+import InboxMailViewSettingsHeader from "../inbox/InboxMailViewSettingsHeader";
 
-function InboxMailView({ sidebar }) {
+function SentMailView({ sidebar }) {
   const [isLoading, setIsLoading] = useState(true);
   const [mail, setMail] = useState();
-  const { mailId } = useParams();
+  const { sentId } = useParams();
 
   const [star, setStar] = useState();
   const [impor, setImpor] = useState();
 
-  const ref = db.collection("mails").doc(mailId);
+  const ref = db.collection("mails").doc(sentId);
   const handleStar = () => {
     if (!star) {
       ref.set(
         {
-          toStarred: true,
+          fromStarred: true,
         },
         { merge: true }
       );
@@ -43,7 +44,7 @@ function InboxMailView({ sidebar }) {
     } else {
       ref.set(
         {
-          toStarred: false,
+          fromStarred: false,
         },
         { merge: true }
       );
@@ -55,7 +56,7 @@ function InboxMailView({ sidebar }) {
     if (!impor) {
       ref.set(
         {
-          toImportant: true,
+          fromImportant: true,
         },
         { merge: true }
       );
@@ -63,7 +64,7 @@ function InboxMailView({ sidebar }) {
     } else {
       ref.set(
         {
-          toImportant: false,
+          fromImportant: false,
         },
         { merge: true }
       );
@@ -72,20 +73,20 @@ function InboxMailView({ sidebar }) {
   };
 
   useEffect(() => {
-    if (mailId) {
+    if (sentId) {
       ref
         .get()
         .then((doc) => {
           if (doc.exists) {
             setMail(doc.data());
             setIsLoading(false);
-            setStar(doc.data().toStarred);
-            setImpor(doc.data().toImportant);
+            setStar(doc.data().fromStarred);
+            setImpor(doc.data().fromImportant);
           }
         })
         .catch((error) => {});
     }
-  }, [mailId]);
+  }, [sentId]);
   return (
     <>
       {isLoading ? (
@@ -96,7 +97,7 @@ function InboxMailView({ sidebar }) {
         </Wrapper>
       ) : (
         <Wrapper>
-          <InboxMailViewSettingsHeader sidebar={sidebar} inbox />
+          <InboxMailViewSettingsHeader sidebar={sidebar} sent />
           <MailViewSection sidebar={sidebar ? 1 : 0}>
             <MailTitleHeader>
               <LeftButton>
@@ -177,7 +178,7 @@ function InboxMailView({ sidebar }) {
   );
 }
 
-export default InboxMailView;
+export default SentMailView;
 
 const Wrapper = styled.div`
   overflow: hidden;

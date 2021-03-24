@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import EmailsTopHeader from "../layout/EmailsTopHeader";
-import InboxMailRow from "./InboxMailRow";
+import StarredMailRow from "./StarredMailRow";
 
-function InboxMail({ sidebar, user, setinboxLength }) {
+function StarredMail({ sidebar, user, setStarLength }) {
   const [mails, setMails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,6 +14,7 @@ function InboxMail({ sidebar, user, setinboxLength }) {
     if (userId) {
       db.collection("mails")
         .where("to", "==", user.userEmail)
+        .where("toStarred", "==", true)
         .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) => {
           let newMails = snapshot.docs.map((doc) => ({
@@ -21,7 +22,7 @@ function InboxMail({ sidebar, user, setinboxLength }) {
             data: doc.data(),
           }));
           setMails(newMails);
-          setinboxLength(newMails.length);
+          setStarLength(newMails.length);
           setIsLoading(false);
         });
     }
@@ -35,9 +36,9 @@ function InboxMail({ sidebar, user, setinboxLength }) {
         </Loading>
       ) : (
         <MailRowView>
-          {mails?.map((mail, index) => (
-            <InboxMailRow
-              key={index.id}
+          {mails?.map((mail) => (
+            <StarredMailRow
+              key={mail.id}
               id={mail.id}
               sidebar={sidebar}
               userName={mail.data.userName}
@@ -45,7 +46,6 @@ function InboxMail({ sidebar, user, setinboxLength }) {
               message={mail.data.message}
               starred={mail.data.toStarred}
               important={mail.data.toImportant}
-              read={mail.data.read}
               timestamp={new Date(
                 mail.data.timestamp * 1000
               ).toLocaleTimeString()}
@@ -57,7 +57,7 @@ function InboxMail({ sidebar, user, setinboxLength }) {
   );
 }
 
-export default InboxMail;
+export default StarredMail;
 
 const EmailsWrapper = styled.div`
   height: 100%;
@@ -65,6 +65,7 @@ const EmailsWrapper = styled.div`
 
 const MailRowView = styled.div`
   height: 81vh;
+
   padding-bottom: 20px;
   overflow-y: scroll;
   margin: 0px 5px 10px 5px;

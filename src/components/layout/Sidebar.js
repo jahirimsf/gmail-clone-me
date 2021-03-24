@@ -1,11 +1,10 @@
 import { Avatar, IconButton } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Compose from "../button/Compose";
 import AddIcon from "@material-ui/icons/Add";
 
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { useHistory } from "react-router-dom";
 import SidebarButtonItems from "../button/SidebarButtonItems";
 import StarIcon from "@material-ui/icons/Star";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
@@ -21,26 +20,45 @@ import CallIcon from "@material-ui/icons/Call";
 import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import VideocamOutlinedIcon from "@material-ui/icons/VideocamOutlined";
 
-function Sidebar({ sidebar, user }) {
-  const history = useHistory();
+function Sidebar({
+  sidebar,
+  user,
+  inboxlength,
+  sentlength,
+  starlength,
+  openSendMessage,
+}) {
   return (
     <>
       {sidebar ? (
         <SidebarWrapper>
           <TopSection>
             <ComposeWrapper>
-              <Compose sidebar={sidebar} />
+              <Compose openSendMessage={openSendMessage} sidebar={sidebar} />
             </ComposeWrapper>
             <SideButtonWrapper>
               <SidebarButtonItems
-                onClick={() => history.push("/")}
-                number={156}
+                inbox
+                number={inboxlength}
                 sidebar
                 Icon={InboxIcon}
               />
-              <SidebarButtonItems number={15} sidebar Icon={StarIcon} />
+
+              <SidebarButtonItems
+                star
+                number={starlength}
+                sidebar
+                Icon={StarIcon}
+              />
               <SidebarButtonItems number={5} sidebar Icon={WatchLaterIcon} />
-              <SidebarButtonItems number={5} sidebar Icon={SendIcon} />
+
+              <SidebarButtonItems
+                sent
+                number={sentlength}
+                sidebar
+                Icon={SendIcon}
+              />
+
               <SidebarButtonItems number={0} sidebar Icon={DraftsIcon} />
               <SidebarButtonItems Icon={ExpandMoreIcon} />
             </SideButtonWrapper>
@@ -81,18 +99,36 @@ function Sidebar({ sidebar, user }) {
         <SidebarWrapper>
           <TopSection>
             <ComposeWrapper>
-              <Compose />
+              <Compose openSendMessage={openSendMessage} />
             </ComposeWrapper>
 
             <SideButtonWrapper>
-              <SidebarButtonItems Icon={InboxIcon} title="Inbox" number={156} />
-              <SidebarButtonItems Icon={StarIcon} title="Starred" number={16} />
+              <SidebarButtonItems
+                inbox
+                Icon={InboxIcon}
+                title="Inbox"
+                number={inboxlength}
+              />
+
+              <SidebarButtonItems
+                star
+                Icon={StarIcon}
+                title="Starred"
+                number={starlength}
+              />
               <SidebarButtonItems
                 Icon={WatchLaterIcon}
                 title="Snoozed"
                 number={56}
               />
-              <SidebarButtonItems Icon={SendIcon} title="Sent" number={15} />
+
+              <SidebarButtonItems
+                sent
+                Icon={SendIcon}
+                title="Sent"
+                number={sentlength}
+              />
+
               <SidebarButtonItems
                 Icon={DraftsIcon}
                 title="Drafts"
@@ -147,7 +183,6 @@ export default Sidebar;
 const SidebarWrapper = styled.div`
   width: 100%;
   height: 90vh;
-  background: white;
   position: relative;
   top: 0;
 `;
@@ -185,7 +220,8 @@ const ButtonWrapper = styled.div`
 const MeetWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid rgb(100 121 143 / 12%);
+  /*  box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%); */
   span {
     width: 30px;
     margin: 4px auto;
@@ -199,7 +235,8 @@ const MeetWrapper = styled.div`
   }
 `;
 const HangoutsWrapper = styled.div`
-  border-top: 1px solid lightgray;
+  border-top: 1px solid rgb(100 121 143 / 12%);
+  /* border-top: 1px solid rgb(100 121 143 / 12%); */
   margin-top: 20px;
 `;
 const BottomIconWrapper = styled.div`
@@ -227,6 +264,7 @@ const TopSection = styled.div`
   position: absolute;
   top: 0;
   width: 100%;
+  box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
 `;
 const BottomeSection = styled.div`
   position: absolute;

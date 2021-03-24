@@ -10,12 +10,20 @@ import { useHistory } from "react-router-dom";
 import GroupButton from "../button/GroupButton";
 import { dataMailViewIcon } from "../data/dataMailViewIcon";
 
-function InboxMailViewSettingsHeader({ inbox }) {
+function InboxMailViewSettingsHeader({ inbox, sent, starred }) {
   const history = useHistory();
-
+  const handleRouting = () => {
+    if (inbox) {
+      history.push("/");
+    } else if (sent) {
+      history.push("/sent");
+    } else if (starred) {
+      history.push("/star");
+    }
+  };
   return (
     <MailSettingsHeader>
-      <IconButton onClick={() => history.push(`${inbox ? "/" : "/mail"}`)}>
+      <IconButton onClick={handleRouting}>
         <ArrowBackIcon />
       </IconButton>
       <MailHeaderLeft>
@@ -45,8 +53,8 @@ const MailSettingsHeader = styled.div`
   align-items: center;
   gap: 5px;
   height: 48px;
-  background: #fff;
-  border-bottom: 1px solid lightgray;
+  box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
+
   .MuiSvgIcon-root {
     font-size: 20px;
   }

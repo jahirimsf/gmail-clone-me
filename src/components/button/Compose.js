@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import AddIcon from "@material-ui/icons/Add";
-function Compose({ sidebar }) {
+function Compose({ sidebar, openSendMessage }) {
   return (
     <>
       {sidebar ? (
-        <Wrapper sidebar>
+        <Wrapper onClick={openSendMessage} sidebar>
           <AddIcon fontSize="large" />
         </Wrapper>
       ) : (
-        <Wrapper>
+        <Wrapper onClick={openSendMessage}>
           <AddIcon fontSize="large" />
           <p>Compose</p>
         </Wrapper>

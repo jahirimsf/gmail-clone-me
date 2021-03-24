@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "./components/layout/Header";
 import Main from "./components/layout/Main";
@@ -11,8 +11,7 @@ function App() {
 
   const defaultUser = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(defaultUser);
-  const handleSidebar = (e) => {
-    console.log(e);
+  const handleSidebar = () => {
     setSidebar(!sidebar);
   };
 
@@ -32,7 +31,6 @@ function App() {
     auth.signOut();
     setUser("");
   };
-  useEffect(() => {}, []);
   return (
     <AppWrapper>
       {!user ? (

@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
   box-sizing: border-box;
 }
 body{
-    background-color: darkred;
+    background-color: white;
 }
 
 `;

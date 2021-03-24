@@ -18,19 +18,20 @@ import ReplyIcon from "@material-ui/icons/Reply";
 import ForwardIcon from "@material-ui/icons/Forward";
 import StarIcon from "@material-ui/icons/Star";
 import SimpleButton from "../button/SimpleButton";
-import InboxMailViewSettingsHeader from "./InboxMailViewSettingsHeader";
+
 import { useParams } from "react-router-dom";
 import { db } from "../../firebase";
+import InboxMailViewSettingsHeader from "../inbox/InboxMailViewSettingsHeader";
 
-function InboxMailView({ sidebar }) {
+function StarredMailView({ sidebar }) {
   const [isLoading, setIsLoading] = useState(true);
   const [mail, setMail] = useState();
-  const { mailId } = useParams();
+  const { starId } = useParams();
 
   const [star, setStar] = useState();
   const [impor, setImpor] = useState();
 
-  const ref = db.collection("mails").doc(mailId);
+  const ref = db.collection("mails").doc(starId);
   const handleStar = () => {
     if (!star) {
       ref.set(
@@ -72,7 +73,7 @@ function InboxMailView({ sidebar }) {
   };
 
   useEffect(() => {
-    if (mailId) {
+    if (starId) {
       ref
         .get()
         .then((doc) => {
@@ -85,7 +86,7 @@ function InboxMailView({ sidebar }) {
         })
         .catch((error) => {});
     }
-  }, [mailId]);
+  }, [starId]);
   return (
     <>
       {isLoading ? (
@@ -96,7 +97,7 @@ function InboxMailView({ sidebar }) {
         </Wrapper>
       ) : (
         <Wrapper>
-          <InboxMailViewSettingsHeader sidebar={sidebar} inbox />
+          <InboxMailViewSettingsHeader sidebar={sidebar} starred />
           <MailViewSection sidebar={sidebar ? 1 : 0}>
             <MailTitleHeader>
               <LeftButton>
@@ -177,7 +178,7 @@ function InboxMailView({ sidebar }) {
   );
 }
 
-export default InboxMailView;
+export default StarredMailView;
 
 const Wrapper = styled.div`
   overflow: hidden;

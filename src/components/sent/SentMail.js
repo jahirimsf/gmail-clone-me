@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import EmailsTopHeader from "../layout/EmailsTopHeader";
-import InboxMailRow from "./InboxMailRow";
+import SentMailRow from "./SentMailRow";
 
-function InboxMail({ sidebar, user, setinboxLength }) {
+function SentMail({ sidebar, user, setSentLength }) {
   const [mails, setMails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -13,7 +13,7 @@ function InboxMail({ sidebar, user, setinboxLength }) {
     const userId = user.userId;
     if (userId) {
       db.collection("mails")
-        .where("to", "==", user.userEmail)
+        .where("from", "==", user.userEmail)
         .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) => {
           let newMails = snapshot.docs.map((doc) => ({
@@ -21,7 +21,7 @@ function InboxMail({ sidebar, user, setinboxLength }) {
             data: doc.data(),
           }));
           setMails(newMails);
-          setinboxLength(newMails.length);
+          setSentLength(newMails.length);
           setIsLoading(false);
         });
     }
@@ -35,17 +35,16 @@ function InboxMail({ sidebar, user, setinboxLength }) {
         </Loading>
       ) : (
         <MailRowView>
-          {mails?.map((mail, index) => (
-            <InboxMailRow
-              key={index.id}
+          {mails?.map((mail) => (
+            <SentMailRow
+              key={mail.id}
               id={mail.id}
               sidebar={sidebar}
               userName={mail.data.userName}
               subject={mail.data.subject}
               message={mail.data.message}
-              starred={mail.data.toStarred}
-              important={mail.data.toImportant}
-              read={mail.data.read}
+              starred={mail.data.fromStarred}
+              important={mail.data.fromImportant}
               timestamp={new Date(
                 mail.data.timestamp * 1000
               ).toLocaleTimeString()}
@@ -57,7 +56,7 @@ function InboxMail({ sidebar, user, setinboxLength }) {
   );
 }
 
-export default InboxMail;
+export default SentMail;
 
 const EmailsWrapper = styled.div`
   height: 100%;

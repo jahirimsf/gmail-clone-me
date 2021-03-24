@@ -44,13 +44,12 @@ export default EmailsTopHeader;
 
 const EmailsTopWrapper = styled.div`
   display: flex;
-  background-color: white;
   width: 100%;
   height: 48px;
   justify-content: space-between;
   align-items: center;
   padding: 2px 10px;
-  border-bottom: 1px solid lightgray;
+  box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
   .MuiSvgIcon-root {
     font-size: 20px;
   }

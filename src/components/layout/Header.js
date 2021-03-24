@@ -7,7 +7,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import AppsIcon from "@material-ui/icons/Apps";
-import { Container } from "../style/GlobalStyle";
+
 function Header({ handleSidebar, user, signOut }) {
   return (
     <HeaderContainer>
@@ -54,10 +54,10 @@ const HeaderContainer = styled.div`
   display: grid;
   grid-template-columns: 17% auto min-content;
   align-items: center;
-  background-color: white;
   padding-left: 10px;
   padding-right: 10px;
   height: 60px;
+  box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
   @media screen and (max-width: 1024px) {
   }
   @media screen and (max-width: 991px) {
@@ -102,7 +102,8 @@ const LogoWrapper = styled.div`
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
-  background: #f1f3f4;
+  background: rgb(180, 180, 180, 0.29);
+  /* background: #f1f3f4; */
   border-radius: 8px;
   max-width: 620px;
   padding: 0 10px;
