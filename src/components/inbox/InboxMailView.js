@@ -263,6 +263,12 @@ const MailTitleHeader = styled.div`
   padding: 0 10px 0 23px;
   height: 48px;
   justify-content: space-between;
+  @media screen and (max-width: 667px) {
+    display: grid;
+    grid-template-columns: 100%;
+    align-items: center;
+    height: 100px;
+  }
   .MuiSvgIcon-root {
     font-size: 20px;
   }
@@ -273,6 +279,12 @@ const MailUserHeader = styled.div`
   align-items: center;
   height: 48px;
   margin: 10px 15px 10px 10px;
+  @media screen and (max-width: 667px) {
+    display: grid;
+    grid-template-columns: 100%;
+    align-items: center;
+    height: 100px;
+  }
 `;
 
 const Span = styled.span`

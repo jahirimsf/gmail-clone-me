@@ -7,7 +7,7 @@ import { auth, provider } from "./firebase";
 import Login from "./Login";
 
 function App() {
-  const [sidebar, setSidebar] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
 
   const defaultUser = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(defaultUser);
