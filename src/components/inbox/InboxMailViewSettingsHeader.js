@@ -66,12 +66,19 @@ const MailSettingsHeader = styled.div`
   gap: 5px;
   height: 48px;
   box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
+  @media screen and (max-width: 667px) {
+    grid-template-columns: 48px auto;
+    align-items: center;
+  }
 
   .MuiSvgIcon-root {
     font-size: 20px;
   }
 `;
 const MailHeaderLeft = styled.div`
+  @media screen and (max-width: 667px) {
+    display: none;
+  }
   .MuiSvgIcon-root {
     font-size: 20px;
   }
@@ -79,6 +86,7 @@ const MailHeaderLeft = styled.div`
 const MailHeaderRight = styled.div`
   display: flex;
   align-items: center;
+
   .MuiSvgIcon-root {
     font-size: 20px;
   }

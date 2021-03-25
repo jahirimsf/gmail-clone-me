@@ -162,12 +162,16 @@ const ItemLeft = styled.div`
 `;
 const ItemRight = styled.div`
   display: grid;
-  grid-template-columns: 200px auto 80px;
+  grid-template-columns: 200px auto 90px;
   padding-top: 10px;
   padding-bottom: 10px;
   cursor: pointer;
   p {
     font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
   }
   div {
     display: flex;
@@ -190,6 +194,50 @@ const ItemRight = styled.div`
     color: black;
     span {
       font-weight: 500;
+    }
+  }
+
+  @media screen and (max-width: 1224px) {
+    div {
+      display: flex;
+
+      p {
+        width: ${({ sidebar }) => (sidebar ? "660px" : "480px")};
+      }
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    div {
+      display: flex;
+
+      p {
+        width: ${({ sidebar }) => (sidebar ? "450px" : "280px")};
+      }
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    display: grid;
+    grid-template-columns: 150px auto 90px;
+    div {
+      display: flex;
+
+      p {
+        width: ${({ sidebar }) => (sidebar ? "450px" : "280px")};
+      }
+    }
+  }
+
+  @media screen and (max-width: 667px) {
+    display: grid;
+    grid-template-columns: 100px auto 90px;
+    div {
+      display: flex;
+
+      p {
+        width: ${({ sidebar }) => (sidebar ? "225px" : "120px")};
+      }
     }
   }
 `;

@@ -67,6 +67,9 @@ const EmailsTopWrapper = styled.div`
 `;
 const PaginationButton = styled(Button)`
   text-transform: lowercase !important;
+  @media screen and (max-width: 667px) {
+    display: none !important;
+  }
 `;
 
 const TopWrapperLeft = styled.div`

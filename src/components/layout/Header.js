@@ -96,6 +96,8 @@ const HeaderContainer = styled.div`
   padding-right: 10px;
   height: 60px;
   box-shadow: inset 0 -1px 0 0 rgb(100 121 143 / 12%);
+  @media screen and (max-width: 1366px) {
+  }
   @media screen and (max-width: 1024px) {
   }
   @media screen and (max-width: 991px) {
